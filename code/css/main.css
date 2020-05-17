@@ -1,0 +1,261 @@
+* {
+    box-sizing: border-box;
+}
+
+
+/* Style of the body */
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    width: auto;
+    height: auto;
+    background-image: url("../images/bg.png");
+    background-position: absolute;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
+
+/*Style of the header*/
+
+.header {
+    position: relative;
+    height: 80px;
+}
+
+.header-container {
+    height: 100%;
+}
+
+
+/*Navigationbar*/
+
+.navbar {
+    overflow: hidden;
+    background-color: #333;
+}
+
+.navbar a {
+    float: left;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+}
+
+.right {
+    float: right;
+}
+
+.navbar a.center {
+    position: absolute;
+    left: 46%;
+    text-align: center;
+}
+
+
+/*Carousel*/
+
+.carousel {
+    position: relative;
+    height: 600px;
+    width: 800px;
+    margin: 0 auto;
+}
+
+.image {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 800px;
+}
+
+.trackContainer {
+    /* background: lightgreen; */
+    height: 500px;
+    overflow: hidden;
+}
+
+.track {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    position: relative;
+    transition: transform 250ms ease-in;
+}
+
+.slide {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+.button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+}
+
+.button--left {
+    left: -40px;
+}
+
+.button--right {
+    right: -50px;
+}
+
+.button img {
+    width: 12px;
+}
+
+.carouselNav {
+    /* background: pink; */
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+}
+
+.indicator {
+    border: 0;
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    background: rgba(0, 0, 0, .3);
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.indicator.currentSlide {
+    background: rgba(0, 0, 0, .75);
+}
+
+
+/*Dropdown navbar*/
+
+.dropButton {
+    background-color: #333;
+    color: white;
+    cursor: pointer;
+    text-align: right;
+}
+
+.navbarItem:hover,
+.navbarItem:focus {
+    background-color: rgba(0, 0, 0, 1);
+}
+
+.dropdown {
+    display: inline-block;
+    overflow: hidden;
+    min-width: 110px;
+}
+
+.dropdownContent {
+    display: none;
+    position: absolute;
+    min-width: 80px;
+    background-color: 0px 8px 16px 0px rgba(0, 0, 0, .2);
+    z-index: 1;
+}
+
+.dropdownContent a:hover {
+    background-color: rgba(0, 0, 0, 1);
+}
+
+.dropdownContent a {
+    float: none;
+    color: white;
+    background-color: #333;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: right;
+}
+
+.show {
+    display: block;
+}
+
+
+/*Column container*/
+
+.row {
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+/*Columns*/
+
+.column {
+    width: 33.33%;
+    /* background-color: pink; */
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 20px;
+    float: left;
+    text-align: left;
+    height: 300px;
+    margin: auto;
+}
+
+@media screen and (max-width: 800px) {
+    .column {
+        width: 100%;
+    }
+}
+
+.columnImage {
+    width: 200px;
+    height: auto;
+    float: left;
+    padding: 10px;
+}
+
+.columnText {
+    padding: 10px;
+    width: auto;
+    color: black;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 7;
+    -webkit-box-orient: vertical;
+}
+
+.columnTitle {
+    padding: 10px;
+    color: black;
+    text-align: center;
+}
+
+.columnLink {
+    text-align: center;
+}
+
+
+/*Clear floats after the columns*/
+
+
+/* .row:after {
+    content: "";
+    display: table;
+    clear: both;
+} */
+
+
+/*Footer*/
+
+.footer {
+    padding: 20px;
+    text-align: center;
+    background: #ddd;
+}
