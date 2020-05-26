@@ -1,24 +1,23 @@
-package domeinLaag;
+package domeinlaag;
 
 import org.junit.jupiter.api.BeforeEach;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class SeriesTest {
-    main.domeinLaag.Series series;
-    main.domeinLaag.Chapter chapter;
-    main.domeinLaag.Guest guest;
-    main.domeinLaag.Admin admin;
-    main.domeinLaag.User user;
+    private main.domeinLaag.Series series;
+    private main.domeinLaag.Chapter chapter;
+    private main.domeinLaag.Guest guest;
+    private main.domeinLaag.Admin admin;
+    private main.domeinLaag.User user;
 
     @BeforeEach
     public void initialize(){
         try{
-            series = new main.domeinLaag.Series("Test", "This is a test");
-            chapter = new main.domeinLaag.Chapter("Chapter-name", 1, "Test");
-            guest = new main.domeinLaag.Guest("Guest");
-            admin = new main.domeinLaag.Admin("Admin", "password");
-            user = new main.domeinLaag.User("User", "password");
+            seriesTest = new series("Test", "This is a test");
+            chapterTest = new Main.domeinlaag.Chapter("Chapter-name", 1, "Test");
+            guestTest = new Main.domeinlaag.Guest("Guest");
+            admin = new Main.domeinlaag.Admin("Admin", "password");
+            user = new Main.domeinlaag.User("User", "password");
+            System.out.println(series);
         } catch (Exception e){
             String errorMessage = "Exception: " + e.getMessage();
             System.out.println(errorMessage);

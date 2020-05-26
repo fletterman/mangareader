@@ -1,4 +1,4 @@
-package main.domeinLaag;
+package main.domeinlaag;
 
 public class Chapter {
     private String name;
@@ -8,6 +8,18 @@ public class Chapter {
     public Chapter(String name, int number, String seriesName){
         this.name = name;
         this.number = number;
+        this.seriesName = seriesName;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public void setSeriesName(String seriesName) {
         this.seriesName = seriesName;
     }
 

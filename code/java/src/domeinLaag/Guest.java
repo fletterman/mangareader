@@ -1,4 +1,4 @@
-package main.domeinLaag;
+package main.domeinlaag;
 
 public class Guest {
     private String name;

@@ -1,4 +1,4 @@
-package main.domeinLaag;
+package main.domeinlaag;
 
 import java.util.HashSet;
 import java.util.TreeMap;
