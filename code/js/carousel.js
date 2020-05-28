@@ -1,4 +1,8 @@
-const track = document.querySelector('.track');
+const track = document.querySelector('div.track');
+const trackTest = document.getElementById('.track');
+console.log(trackTest);
+console.log(document);
+console.log(track);
 const slides = Array.from(track.children);
 const nextButton = document.querySelector('.button--right');
 const prevButton = document.querySelector('.button--left');
@@ -65,19 +69,3 @@ indicators.addEventListener('click', e => {
     moveSlide(track, currentSlide, targetSlide);
     updateDots(currentDot, targetDot);
 });
-
-const dropdownClick = () => {
-    document.getElementById("myDropdown").classList.toggle("show");
-}
-
-window.onclick = function(event) {
-    if (!event.target.matches('.dropButton')) {
-        const dropdowns = document.getElementsByClassName("dropdownContent");
-        for (let i = 0; i < dropdowns.length; i++) {
-            const openDropdown = dropdowns[i];
-            if (openDropdown.classList.contains('show')) {
-                openDropdown.classList.remove('show');
-            }
-        }
-    }
-}
