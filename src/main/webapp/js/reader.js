@@ -64,12 +64,17 @@ xmlhttp.send();
 function loadImages(arr) {
     var out = "";
     for (let i = 0; i < arr.length; i++) {
-        if(arr[i].contains("-")){
-            out+= "<img class=\"images\" src=\"" + array[i] + "\"";
-        }else{
-            out+= "<img class=\"image\" src=\"" + array[i] + "\""
-        }
+        // if(arr[i].contains("-")){
+        //     out+= "<img class=\"images\" src=\"" + array[i] + "\"";
+        // }else{
+        var img = document.createElement("img");
+        img.src = arr[i];
+        img.className = "image";
+        var src = document.getElementById("images");
+        src.appendChild(img);
+            // out+= "<img class=\"image\" src=\"" + arr[i] + "\""
+        // }
     }
     console.log(out);
-    document.write(out);
+    // document.write(out);
 }

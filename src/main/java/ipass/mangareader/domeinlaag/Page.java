@@ -16,7 +16,7 @@ public class Page {
         this.pageNumber = pageNumber;
         this.chapterID = chapterID;
         this.seriesID = seriesID;
-        String path = "../images/" + seriesID + "/" + chapterID + "/" + pageNumber + ".png";
+        String path = "images/" + seriesID + "/" + chapterID + "/" + pageNumber + ".png";
         TreeMap<Integer, Series> allSeries = series.giveAllSeries();
         for (Map.Entry<Integer, Series> entry : allSeries.entrySet()) {
             Series serie = entry.getValue();

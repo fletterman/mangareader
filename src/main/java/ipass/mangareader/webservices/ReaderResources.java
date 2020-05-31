@@ -4,10 +4,7 @@ import ipass.mangareader.domeinlaag.Chapter;
 import ipass.mangareader.domeinlaag.Page;
 import ipass.mangareader.domeinlaag.Series;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
@@ -19,7 +16,7 @@ public class ReaderResources {
 
     @GET
     @Path("/{seriesID}/{chapterNumber}")
-    @Produces(MediaType.TEXT_HTML)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response getChapter(@PathParam("seriesID") int seriesID, @PathParam("chapterNumber") int chapterNumber){
         Series series = null;
 
@@ -32,8 +29,8 @@ public class ReaderResources {
         }
         new Series("World Teacher", "Assassin died and reincarnated in another world", 0);
         new Chapter("Princess Riefel", 15, 0, 0);
-        for (int i = 0; i < 27; i++) {
-            new Page(i+28, i+1, 1, 0);
+        for (int i = 0; i < 26; i++) {
+            new Page(i+28, i+1, 0, 0);
         }
 
         new Series("Kuitsume", "Swordsman restarting his life", 2);
@@ -52,7 +49,6 @@ public class ReaderResources {
                 for (Chapter eachChapter : allChapters){
                     if(eachChapter.giveNumber() == chapterNumber){
                         ArrayList<String> allpages = eachChapter.getPages();
-                        System.out.println(allpages);
                         for (int i = 0; i < allpages.size(); i++) {
                             allImages.add(allpages.get(i));
                         }
