@@ -48,6 +48,8 @@ public class ReaderResources {
                 ArrayList<Chapter> allChapters = series.getAllChapters();
                 for (Chapter eachChapter : allChapters){
                     if(eachChapter.giveNumber() == chapterNumber){
+                        allImages.add(eachChapter.giveName());
+                        allImages.add(eachChapter.giveNumber());
                         ArrayList<String> allpages = eachChapter.getPages();
                         for (int i = 0; i < allpages.size(); i++) {
                             allImages.add(allpages.get(i));
