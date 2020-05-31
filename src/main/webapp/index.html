@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Project Time Scans</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/main.css">
+    <script type="text/javascript" src="js/dropdown.js"></script>
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-container">
+            <div class="navbar">
+                <a href="series.html" class="navbarItem">Series</a>
+                <a href="favourites.html" class="navbarItem">Favourites</a>
+                <a href="manage.html" class="navbarItem">Manage</a>
+                <a href="reader.html" class="navbarItem">Reader</a>
+                <a href="index.html" class="center navbarItem dropdown">Project Time Scans</a>
+                <div class="navbarItem dropdown right">
+                    <a href="javascript:void(0)" class="dropButton" onclick="dropdownClick()">Guest</a>
+                    <div class="dropdownContent" id="myDropdown">
+                        <a href="login.html" id="login">Login</a>
+                        <a href="login.html" id="profile">Profile</a>
+                        <a href="favourites.html" id="favourites">Favourites</a>
+                        <a href="login.html" id="logout">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="carousel">
+        <button class="button button--left">
+            <img src="images/left.png" alt="">
+        </button>
+        <div class="trackContainer">
+            <ul class="track" id="track">
+                <li class="slide currentSlide">
+                    <a href="series.html"><img class="image" src="images/Lady-in-red-Pin-up.jpg" alt=""></a>
+                </li>
+                <li class="slide">
+                    <img class="image" src="images/Linda-Pin-up.jpg" alt="">
+                </li>
+                <li class="slide">
+                    <img class="image" src="images/Siska-Pin-up.jpg" alt="">
+                </li>
+            </ul>
+        </div>
+        <button class="button button--right">
+            <img src="images/right.png" alt="">
+        </button>
+        <div class="carouselNav">
+            <button class="indicator currentSlide"></button>
+            <button class="indicator"></button>
+            <button class="indicator"></button>
+        </div>
+    </div>
+    <script type="text/javascript" src="js/carousel.js"></script>
+</body>
+
+</html>
