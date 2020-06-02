@@ -6,12 +6,12 @@ import java.util.TreeMap;
 
 public class Page {
     private int pageID;
-    private int pageNumber;
+    private String pageNumber;
     private int chapterID;
     private int seriesID;
     private Series series;
 
-    public Page(int pageID, int pageNumber, int chapterID, int seriesID){
+    public Page(int pageID, String pageNumber, int chapterID, int seriesID){
         this.pageID = pageID;
         this.pageNumber = pageNumber;
         this.chapterID = chapterID;
@@ -40,11 +40,11 @@ public class Page {
         return pageID;
     }
 
-    public void setPageNumber(int pageNumber) {
+    public void setPageNumber(String pageNumber) {
         this.pageNumber = pageNumber;
     }
 
-    public int getPageNumber() {
+    public String getPageNumber() {
         return pageNumber;
     }
 

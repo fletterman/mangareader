@@ -24,19 +24,28 @@ public class ReaderResources {
         new Chapter("Searching for the phantom monster", 1, 0, 1);
         int id = 0;
         while (id < 28) {
-            Page pageAdd = new Page(id, id+1, 0, 1);
-            id += 1;
+            if(id == 21) {
+                String pageNumber = String.valueOf(id + 1) + "-" + String.valueOf(id + 2);
+                Page pageAdd = new Page(id, pageNumber, 0, 1);
+                id += 1;
+            }
+            if (id == 22) {
+                id+=1;
+            } else {
+                Page pageAdd = new Page(id, String.valueOf(id + 1), 0, 1);
+                id += 1;
+            }
         }
         new Series("World Teacher", "Assassin died and reincarnated in another world", 0);
         new Chapter("Princess Riefel", 15, 0, 0);
         for (int i = 0; i < 26; i++) {
-            new Page(i+28, i+1, 0, 0);
+            new Page(i+28, String.valueOf(i+1), 0, 0);
         }
 
         new Series("Kuitsume", "Swordsman restarting his life", 2);
         new Chapter("Reality is merciless!", 4, 2, 2);
         for (int i = 0; i < 26; i++) {
-            new Page(i+53, i+1, 2, 2);
+            new Page(i+53, String.valueOf(i+1), 2, 2);
         }
         ArrayList allImages = new ArrayList();
 

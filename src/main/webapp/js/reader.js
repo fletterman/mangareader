@@ -1,16 +1,21 @@
-var urlpath = window.location.pathname;
-console.log(urlpath);
-const splitUrl = urlpath.split("/", 4);
-console.log(splitUrl)
-
+var path = document.getElementById("chapter").getAttribute("data-name");
+console.log(path);
 
 var xmlhttp = new XMLHttpRequest();
-var url = "restservices/reader/0/15";
+var url = "restservices/reader/1/15";
+// var url = "restservices/reader" + path;
 
 xmlhttp.onreadystatechange = function () {
     if(this.readyState == 4 && this.status == 200){
         var myArr = JSON.parse(this.responseText);
         loadImages(myArr);
+        loadImages.onerror = function(){
+            var text = document.createElement("p");
+            var info = document.createTextNode("The reader couldn't find the chapter. Please try again with another chapter");
+            text.appendChild(info);
+            var src = document.getElementById("error");
+            src.appendChild(text);
+        }
         loadName(myArr[0]);
         loadNumber(myArr[1]);
     }
@@ -22,17 +27,17 @@ xmlhttp.send();
 function loadImages(arr) {
     var out = "";
     for (let i = 2; i < arr.length; i++) {
-        // if(arr[i].contains("-")){
-        //     out+= "<img class=\"images\" src=\"" + array[i] + "\"";
-        // }else{
         var img = document.createElement("img");
         img.src = arr[i];
-        img.className = "image";
-        img.alt = "page";
+        if (arr[i].split("-")) {
+            img.className = "images";
+        } else {
+            img.className = "image";
+        }
+        var altID = i - 1
+        img.alt = altID;
         var src = document.getElementById("images");
         src.appendChild(img);
-            // out+= "<img class=\"image\" src=\"" + arr[i] + "\""
-        // }
     }
     console.log(out);
     // document.write(out);
