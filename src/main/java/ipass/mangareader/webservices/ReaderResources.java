@@ -67,9 +67,6 @@ public class ReaderResources {
                 }
             }
         }
-//        System.out.println(allImages);
-//        System.out.println("Testing");
-//        return allImages;
         return Response.ok(allImages).build();
     }
 }

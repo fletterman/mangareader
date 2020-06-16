@@ -1,4 +1,4 @@
-var path = document.getElementById("chapter").getAttribute("data-name");
+var path = document.getElementById("chapter").getAttribute("value");
 console.log(path);
 
 var xmlhttp = new XMLHttpRequest();
@@ -8,16 +8,21 @@ var url = "restservices/reader/1/15";
 xmlhttp.onreadystatechange = function () {
     if(this.readyState == 4 && this.status == 200){
         var myArr = JSON.parse(this.responseText);
-        loadImages(myArr);
-        loadImages.onerror = function(){
-            var text = document.createElement("p");
-            var info = document.createTextNode("The reader couldn't find the chapter. Please try again with another chapter");
-            text.appendChild(info);
-            var src = document.getElementById("error");
-            src.appendChild(text);
+        if (myArr.length === 0){
+            document.getElementById("chapternumber").innerHTML = "This chapter doesn't exist."
+            document.getElementById("chaptername").innerHTML = "Please try with another chapter"
+        } else {
+            loadImages(myArr);
+            loadImages.onerror = function(){
+                var text = document.createElement("p");
+                var info = document.createTextNode("The reader couldn't find the chapter. Please try again with another chapter");
+                text.appendChild(info);
+                var src = document.getElementById("error");
+                src.appendChild(text);
+            }
+            loadName(myArr[0]);
+            loadNumber(myArr[1]);
         }
-        loadName(myArr[0]);
-        loadNumber(myArr[1]);
     }
 };
 

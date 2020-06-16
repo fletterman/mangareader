@@ -11,7 +11,7 @@ body {
     left: 50%;
     top: 0;
     background-image: url("../images/bg.png");
-    background-position: absolute;
+    background-position: center;
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-size: cover;
@@ -161,7 +161,7 @@ body {
     display: none;
     position: absolute;
     min-width: 80px;
-    background-color: 0px 8px 16px 0px rgba(0, 0, 0, .2);
+    background-color: rgba(0, 0, 0, .2);
     z-index: 1;
 }
 
@@ -183,22 +183,12 @@ body {
     display: block;
 }
 
-
-/*Column container*/
-
-.row {
-    display: -ms-flexbox;
-    display: flex;
-    flex-wrap: wrap;
-}
-
-
 /*Columns*/
 
 .column {
     width: 33.33%;
     /* background-color: pink; */
-    background-color: rgba(255, 255, 255, 0.5);
+    /*background-color: rgba(255, 255, 255, 0.5);*/
     padding: 20px;
     float: left;
     text-align: left;
@@ -206,10 +196,8 @@ body {
     margin: auto;
 }
 
-@media screen and (max-width: 800px) {
-    .column {
-        width: 100%;
-    }
+.columnBackground {
+    background-color: rgba(255, 255, 255, 0.5);
 }
 
 .columnImage {
@@ -241,15 +229,11 @@ body {
     text-align: center;
 }
 
-
-/*Clear floats after the columns*/
-
-
-/* .row:after {
-    content: "";
-    display: table;
-    clear: both;
-} */
+@media screen and (max-width: 800px) {
+    .column {
+        width: 100%;
+    }
+}
 
 
 /*Footer*/
