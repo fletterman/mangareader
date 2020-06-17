@@ -1,13 +1,14 @@
-var path = document.getElementById("chapter").getAttribute("value");
+var path = sessionStorage.getItem("chapter")
 console.log(path);
 
 var xmlhttp = new XMLHttpRequest();
-var url = "restservices/reader/1/15";
-// var url = "restservices/reader" + path;
+// var url = "restservices/reader/1/0";
+var url = "restservices/reader" + path;
 
 xmlhttp.onreadystatechange = function () {
     if(this.readyState == 4 && this.status == 200){
         var myArr = JSON.parse(this.responseText);
+        // console.log(myArr);
         if (myArr.length === 0){
             document.getElementById("chapternumber").innerHTML = "This chapter doesn't exist."
             document.getElementById("chaptername").innerHTML = "Please try with another chapter"
@@ -44,7 +45,7 @@ function loadImages(arr) {
         var src = document.getElementById("images");
         src.appendChild(img);
     }
-    console.log(out);
+    //console.log(out);
     // document.write(out);
 }
 

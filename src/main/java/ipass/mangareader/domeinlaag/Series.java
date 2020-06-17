@@ -20,12 +20,11 @@ public class Series {
         allSeries.add(this);
     }
 
-    public static TreeMap<Integer, Series> giveAllSeries(){
-        TreeMap<Integer, Series> allS = new TreeMap<Integer, Series>();
+    public static ArrayList<Series> giveAllSeries(){
+        ArrayList<Series> allS = new ArrayList<>();
         for (Series series : allSeries){
-            int seriesID = series.seriesID;
 //            System.out.println(series + " Testing");
-            allS.put(seriesID, series);
+            allS.add(series);
 //            System.out.println(allS);
         }
         return allS;

@@ -17,12 +17,11 @@ public class Page {
         this.chapterID = chapterID;
         this.seriesID = seriesID;
         String path = "images/" + seriesID + "/" + chapterID + "/" + pageNumber + ".png";
-        TreeMap<Integer, Series> allSeries = series.giveAllSeries();
-        for (Map.Entry<Integer, Series> entry : allSeries.entrySet()) {
-            Series serie = entry.getValue();
-            int seriesKey = entry.getKey();
+        ArrayList<Series> allSeries = series.giveAllSeries();
+        for (Series entry : allSeries) {
+            int seriesKey = entry.getSeriesID();
             if(seriesKey==seriesID){
-                ArrayList<Chapter> allChapters = serie.getAllChapters();
+                ArrayList<Chapter> allChapters = entry.getAllChapters();
                 for (Chapter chapter : allChapters){
                     if(chapter.getChapterID() == chapterID){
                         chapter.addPage(path);

@@ -62,8 +62,7 @@ public class AppTest
 
     @Test
     public void testSeries(){
-        TreeMap<Integer, Series> allSeries = new TreeMap<Integer, Series>();
-        allSeries = Series.giveAllSeries();
+        ArrayList allSeries = Series.giveAllSeries();
         assertTrue(allSeries.size() == 3);
     }
 

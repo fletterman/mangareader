@@ -17,12 +17,11 @@ public class Chapter {
         this.number = number;
         this.chapterID = chapterID;
         this.seriesID = seriesID;
-        TreeMap<Integer, Series> allSeries = series.giveAllSeries();
-        for (Map.Entry<Integer, Series> entry : allSeries.entrySet()) {
-            series = entry.getValue();
-            int seriesKey = entry.getKey();
+        ArrayList<Series> allSeries = series.giveAllSeries();
+        for (Series entry : allSeries) {
+            int seriesKey = entry.getSeriesID();
             if (seriesKey == seriesID) {
-                series.addChapter(this);
+                entry.addChapter(this);
             }
         }
     }
