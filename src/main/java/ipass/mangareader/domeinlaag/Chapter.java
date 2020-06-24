@@ -1,8 +1,6 @@
 package ipass.mangareader.domeinlaag;
 
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.TreeMap;
 
 public class Chapter {
     private String name;
@@ -10,18 +8,19 @@ public class Chapter {
     private int seriesID;
     private int chapterID;
     private ArrayList<String> pages = new ArrayList<String>();
-    private Series series;
+    private Serie serie;
 
     public Chapter(String name, int number, int chapterID, int seriesID){
         this.name = name;
         this.number = number;
         this.chapterID = chapterID;
         this.seriesID = seriesID;
-        ArrayList<Series> allSeries = series.giveAllSeries();
-        for (Series entry : allSeries) {
+        ArrayList<Serie> allSeries = serie.giveAllSeries();
+        for (Serie entry : allSeries) {
             int seriesKey = entry.getSeriesID();
             if (seriesKey == seriesID) {
                 entry.addChapter(this);
+//                System.out.println(this);
             }
         }
     }

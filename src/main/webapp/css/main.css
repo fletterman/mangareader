@@ -187,8 +187,6 @@ body {
 
 .column {
     width: 33.33%;
-     /*background-color: pink;*/
-    /*background-color: rgba(255, 255, 255, 0.5);*/
     padding: 20px;
     float: left;
     text-align: left;
@@ -198,8 +196,11 @@ body {
 
 .columnBackground {
     background-color: rgba(255, 255, 255, 0.5);
-    border: dashed red;
-    min-width: 100vw;
+    position: absolute;
+    float: left;
+    width: 90%;
+    left: 5%;
+    display: block;
 }
 
 .columnImage {
@@ -207,6 +208,7 @@ body {
     height: auto;
     float: left;
     padding: 10px;
+    cursor: pointer;
 }
 
 .columnText {
@@ -229,6 +231,7 @@ body {
 
 .columnLink {
     text-align: center;
+    cursor: pointer;
 }
 
 @media screen and (max-width: 800px) {

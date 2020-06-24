@@ -2,13 +2,11 @@ package ipass;
 
 import ipass.mangareader.domeinlaag.Chapter;
 import ipass.mangareader.domeinlaag.Page;
-import ipass.mangareader.domeinlaag.Series;
-import org.junit.Before;
+import ipass.mangareader.domeinlaag.Serie;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 
 import java.util.ArrayList;
-import java.util.TreeMap;
 
 import static org.junit.Assert.assertTrue;
 
@@ -19,9 +17,9 @@ public class AppTest
         try {
             Page page;
             Chapter chapter;
-            Series series;
+            Serie serie;
 
-            new Series("LV999", "Villager of LV999", 1);
+            new Serie("LV999", "Villager of LV999", 1);
             new Chapter("Searching for the phantom monster", 1, 0, 1);
             int id = 0;
             while (id < 28) {
@@ -37,13 +35,13 @@ public class AppTest
                     id += 1;
                 }
             }
-            new Series("World Teacher", "Assassin died and reincarnated in another world", 0);
+            new Serie("World Teacher", "Assassin died and reincarnated in another world", 0);
             new Chapter("Princess Riefel", 15, 0, 0);
             for (int i = 0; i < 26; i++) {
                 new Page(i+28, String.valueOf(i+1), 0, 0);
             }
 
-            new Series("Kuitsume", "Swordsman restarting his life", 2);
+            new Serie("Kuitsume", "Swordsman restarting his life", 2);
             new Chapter("Reality is merciless!", 4, 2, 2);
             for (int i = 0; i < 26; i++) {
                 new Page(i+53, String.valueOf(i+1), 2, 2);
@@ -62,7 +60,7 @@ public class AppTest
 
     @Test
     public void testSeries(){
-        ArrayList allSeries = Series.giveAllSeries();
+        ArrayList allSeries = Serie.giveAllSeries();
         assertTrue(allSeries.size() == 3);
     }
 

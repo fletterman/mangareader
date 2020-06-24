@@ -1,14 +1,12 @@
-// window.onload() = function () {
-//
-// }
-
 var xmlhttp = new XMLHttpRequest();
 var url = "restservices/series";
+console.log(url);
 
 xmlhttp.onreadystatechange = function () {
     if(this.readyState == 4 && this.status == 200){
         var myArr = JSON.parse(this.responseText);
-        // console.log(myArr);
+        myArr = sortBySeriesID(myArr, "seriesID");
+        console.log(myArr);
         if(myArr.length === 0){
             var src = document.getElementById("columnBackground");
             var title = document.createElement("h1");
@@ -18,11 +16,15 @@ xmlhttp.onreadystatechange = function () {
             text.innerHTML("We couldn't find the items you were looking for, please contact the admins for help");
             src.appendChild(text);
         }else{
+            // sessionStorage.setItem("series", JSON.stringify(myArr));
             for (series of myArr){
                 var item = document.createElement("div")
                 item.className = "column";
-                var cover = document.createElement("a")
-                cover.href = series["seriesName"]+".html";
+                var cover = document.createElement("a");
+                cover.id = series["seriesID"];
+                cover.onclick = function () {
+                    location.href = "serie.html#" + this.id;
+                }
                 var image = document.createElement("img");
                 image.alt = series["seriesName"];
                 image.className = "columnImage";
@@ -39,7 +41,10 @@ xmlhttp.onreadystatechange = function () {
                 summary.innerHTML = series["seriesSummary"];
                 item.appendChild(summary);
                 var link = document.createElement("a");
-                link.href = series["seriesName"]+".html";
+                link.id = series["seriesID"];
+                link.onclick = function () {
+                    location.href = "serie.html#" + this.id;
+                }
                 var linkText = document.createElement("p");
                 linkText.className = "columnLink";
                 linkText.innerHTML = "Read more here";
@@ -54,3 +59,11 @@ xmlhttp.onreadystatechange = function () {
 
 xmlhttp.open("GET", url, true);
 xmlhttp.send();
+
+function sortBySeriesID(array, key) {
+    return array.sort(function (a,b) {
+        var x = a[key];
+        var y = b[key];
+        return ((x < y) ? -1: ((x > y) ? 1 : 0));
+    });
+}

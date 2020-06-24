@@ -6,8 +6,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.TreeMap;
 
 @Path("/reader")
 public class ReaderResources {
@@ -16,12 +14,12 @@ public class ReaderResources {
     @Path("/{seriesID}/{chapterNumber}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getChapter(@PathParam("seriesID") int seriesID, @PathParam("chapterNumber") int chapterNumber){
-        Series series = null;
+        Serie serie = null;
 
         ArrayList allImages = new ArrayList();
 
-        ArrayList<Series> allSeries = series.giveAllSeries();
-        for (Series entry : allSeries) {
+        ArrayList<Serie> allSeries = serie.giveAllSeries();
+        for (Serie entry : allSeries) {
             int seriesKey = entry.getSeriesID();
             if(seriesKey==seriesID){
                 ArrayList<Chapter> allChapters = entry.getAllChapters();

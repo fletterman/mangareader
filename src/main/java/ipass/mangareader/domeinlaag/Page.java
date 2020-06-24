@@ -1,15 +1,13 @@
 package ipass.mangareader.domeinlaag;
 
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.TreeMap;
 
 public class Page {
     private int pageID;
     private String pageNumber;
     private int chapterID;
     private int seriesID;
-    private Series series;
+    private Serie serie;
 
     public Page(int pageID, String pageNumber, int chapterID, int seriesID){
         this.pageID = pageID;
@@ -17,8 +15,8 @@ public class Page {
         this.chapterID = chapterID;
         this.seriesID = seriesID;
         String path = "images/" + seriesID + "/" + chapterID + "/" + pageNumber + ".png";
-        ArrayList<Series> allSeries = series.giveAllSeries();
-        for (Series entry : allSeries) {
+        ArrayList<Serie> allSeries = serie.giveAllSeries();
+        for (Serie entry : allSeries) {
             int seriesKey = entry.getSeriesID();
             if(seriesKey==seriesID){
                 ArrayList<Chapter> allChapters = entry.getAllChapters();
