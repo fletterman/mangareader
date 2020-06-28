@@ -1,6 +1,8 @@
 package ipass.mangareader.domeinlaag;
 
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class Page {
     private int pageID;
@@ -19,10 +21,10 @@ public class Page {
         for (Serie entry : allSeries) {
             int seriesKey = entry.getSeriesID();
             if(seriesKey==seriesID){
-                ArrayList<Chapter> allChapters = entry.getAllChapters();
-                for (Chapter chapter : allChapters){
-                    if(chapter.getChapterID() == chapterID){
-                        chapter.addPage(path);
+                TreeMap<String, Chapter> allChapters = entry.getAllChapters();
+                for (Map.Entry<String, Chapter> chapter : allChapters.entrySet()){
+                    if(chapter.getValue().getChapterID() == chapterID){
+                        chapter.getValue().addPage(path);
                     }
                 }
             }

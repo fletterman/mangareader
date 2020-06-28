@@ -13,7 +13,6 @@ import java.util.ArrayList;
 @Path("/series")
 public class SeriesResource {
     @GET
-//    @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getSeries(){
         ArrayList allSeries = Serie.giveAllSeries();

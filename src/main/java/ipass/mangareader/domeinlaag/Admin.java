@@ -6,7 +6,7 @@ import java.util.HashSet;
 public class Admin {
     private String name;
     private String password;
-    private ArrayList<Admin> allAdmins = new ArrayList<Admin>();
+    private static ArrayList<Admin> allAdmins = new ArrayList<Admin>();
 
     public Admin(String name, String password){
         this.name = name;
@@ -20,6 +20,10 @@ public class Admin {
 
     public String givePassword(){
         return password;
+    }
+
+    public static ArrayList<Admin> getAllAdmins() {
+        return allAdmins;
     }
 
     public Admin createAdmin(String name, String password){

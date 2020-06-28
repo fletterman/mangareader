@@ -2,6 +2,7 @@ package ipass.mangareader.domeinlaag;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.TreeMap;
 
 public class Serie {
     private String name;
@@ -9,7 +10,7 @@ public class Serie {
     private int seriesID;
     private boolean favorite = false;
     private static HashSet<Serie> allSeries = new HashSet<Serie>();
-    private ArrayList<Chapter> allChapters = new ArrayList<Chapter>();
+    private TreeMap<String, Chapter> allChapters = new TreeMap<>();
 
     public Serie(String name, String summary, int seriesID){
         this.name = name;
@@ -33,10 +34,11 @@ public class Serie {
                 requestedSerie = serie;
             }
         }
+//        System.out.println(requestedSerie);
         return requestedSerie;
     }
 
-    public ArrayList<Chapter> getAllChapters() {
+    public TreeMap<String, Chapter> getAllChapters() {
         return allChapters;
     }
 
@@ -70,7 +72,7 @@ public class Serie {
     }
 
     public void addChapter(Chapter chapter){
-        allChapters.add(chapter);
+        allChapters.put(chapter.giveName(), chapter);
     }
 
     @Override

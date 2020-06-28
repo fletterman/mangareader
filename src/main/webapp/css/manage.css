@@ -1,0 +1,28 @@
+.serie {
+    width: 90%;
+    height: 125px;
+    text-align: left;
+    padding: 15px;
+    float: left;
+}
+
+.seriesImage {
+    height: 100px;
+    width: auto;
+    cursor: pointer;
+    float: left;
+    padding: 5px;
+}
+
+.seriesTitle {
+    text-align: left;
+    float: left;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.backbutton {
+    float: left;
+    text-align: center;
+    margin: 10px;
+}

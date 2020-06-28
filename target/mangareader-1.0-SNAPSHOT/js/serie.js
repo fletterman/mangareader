@@ -6,7 +6,10 @@ function serie() {
     xmlhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             var currentSerie = JSON.parse(this.responseText);
-
+            sessionStorage.setItem("serie", currentSerie)
+            // console.log(currentSerie);
+            currentSerie["allChapters"] = sortChapter(currentSerie["allChapters"], "chapterID");
+            console.log(currentSerie);
             document.title = currentSerie["seriesName"];
             var item = document.createElement("div");
             item.id = "serieInfo";
@@ -26,6 +29,24 @@ function serie() {
             summary.innerHTML = currentSerie["seriesSummary"];
             summary.id = "serieSummary";
             item.appendChild(summary);
+            var list = document.createElement("ul");
+            list.className = "ul";
+            list.id = "allChapters";
+            list.innerHTML = "All chapters:"
+            var chapters = currentSerie["allChapters"];
+
+            for (var chapterName in chapters){
+                var entry = document.createElement("li");
+                entry.innerHTML = "Chapter " + chapters[chapterName]["chapterID"] + ": " + chapterName;
+                entry.id = chapters[chapterName]["chapterID"];
+                entry.onclick = function (){
+                    location.href = "reader.html#" + currentSerie["seriesID"] + "/" + this.id;
+                }
+                list.appendChild(entry);
+                // console.log(chapters[chapterName])
+            }
+
+            item.appendChild(list);
 
             var src = document.getElementById("columnBackground");
             src.appendChild(item);
@@ -56,4 +77,18 @@ window.onhashchange = function () {
         div.removeChild(div.firstChild);
     }
     serie();
+}
+
+function sortChapter(array) {
+    var newArray = new Array();
+    for (var keyArray in array) {
+        newArray.push(keyArray);
+        newArray.push(array[keyArray]);
+    }
+    newArray.reverse();
+    var newJSON = {};
+    for (let i = 0; i < newArray.length; i+=2) {
+        newJSON[newArray[i+1]] = newArray[i];
+    }
+    return newJSON;
 }

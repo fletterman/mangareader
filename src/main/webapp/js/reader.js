@@ -1,15 +1,8 @@
 function reader() {
 
-// var path = sessionStorage.getItem("chapter")
-// console.log(path);
-//
-// var url = window.location.href;
-// var splitUrl = url.split("/");
-
     var chapterInfo = window.location.hash.substring(1);
 
     var xmlhttp = new XMLHttpRequest();
-// var url = "restservices/reader" + path;
     var url = "restservices/reader/" + chapterInfo;
 
     xmlhttp.onreadystatechange = function () {

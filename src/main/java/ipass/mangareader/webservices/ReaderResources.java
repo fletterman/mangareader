@@ -6,6 +6,8 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.TreeMap;
 
 @Path("/reader")
 public class ReaderResources {
@@ -22,12 +24,12 @@ public class ReaderResources {
         for (Serie entry : allSeries) {
             int seriesKey = entry.getSeriesID();
             if(seriesKey==seriesID){
-                ArrayList<Chapter> allChapters = entry.getAllChapters();
-                for (Chapter eachChapter : allChapters){
-                    if(eachChapter.giveNumber() == chapterNumber){
-                        allImages.add(eachChapter.giveName());
-                        allImages.add(eachChapter.giveNumber());
-                        ArrayList<String> allpages = eachChapter.getPages();
+                TreeMap<String, Chapter> allChapters = entry.getAllChapters();
+                for (Map.Entry<String, Chapter> eachChapter : allChapters.entrySet()){
+                    if(eachChapter.getValue().giveNumber() == chapterNumber){
+                        allImages.add(eachChapter.getValue().giveName());
+                        allImages.add(eachChapter.getValue().giveNumber());
+                        ArrayList<String> allpages = eachChapter.getValue().getPages();
                         for (String allpage : allpages) {
                             allImages.add(allpage);
                         }

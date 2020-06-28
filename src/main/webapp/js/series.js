@@ -15,7 +15,7 @@ xmlhttp.onreadystatechange = function () {
             text.innerHTML("We couldn't find the items you were looking for, please contact the admins for help");
             src.appendChild(text);
         }else{
-            // sessionStorage.setItem("series", JSON.stringify(myArr));
+            sessionStorage.setItem("series", JSON.stringify(myArr));
             for (series of myArr){
                 var item = document.createElement("div")
                 item.className = "column";
@@ -66,7 +66,3 @@ function sortBySeriesID(array, key) {
         return ((x < y) ? -1: ((x > y) ? 1 : 0));
     });
 }
-
-
-var les = JSON.parse(sessionStorage.getItem("lessen"));
-les[0]
