@@ -69,16 +69,22 @@ function loadSerie(){
                 currentSerie["allChapters"] = sortChapter(currentSerie["allChapters"], "chapterID");
                 console.log(currentSerie);
                 document.title = currentSerie["seriesName"];
-                var item = document.createElement("div");
-                item.id = "serieInfo";
+                var src = document.getElementById("columnBackground");
                 var back = document.createElement("button");
                 back.innerHTML = "Back";
                 back.className = "backbutton";
+                back.id = "backbutton";
                 back.onclick = function () {
                     location.href = "manage.html#" + urlVariables[0];
                     location.reload();
                 }
-                item.appendChild(back);
+                src.appendChild(back);
+                var div = document.createElement("div");
+                src.appendChild(div);
+                var item = document.createElement("form");
+                item.id = "serieInfo";
+                item.className = "form";
+                item.enctype = "multipart/form-data";
                 var linebreak = document.createElement("br");
                 item.appendChild(linebreak);
                 var divCover = document.createElement("div");
@@ -95,32 +101,42 @@ function loadSerie(){
                 var coverInput = document.createElement("input");
                 coverInput.id = "cover-input";
                 coverInput.type = "file";
-                coverInput.accept = "image/*"
+                coverInput.accept = "image/*";
+                coverInput.formEnctype = "multipart/form-data";
                 divCover.appendChild(coverInput);
                 divCover.appendChild(br);
-                var coverButton = document.createElement("button");
-                coverButton.id = "coverbutton";
-                coverButton.innerHTML = "Submit";
-                coverButton.onclick = function () {
-
-                }
-                divCover.appendChild(coverButton);
+                // var coverButton = document.createElement("button");
+                // coverButton.id = "coverbutton";
+                // coverButton.innerHTML = "Submit";
+                // coverButton.onclick = function () {
+                //
+                // }
+                // divCover.appendChild(coverButton);
                 item.appendChild(divCover);
                 var title = document.createElement("h1");
                 title.className = "serieTitle";
                 title.id = "serieTitle";
                 title.innerHTML = currentSerie["seriesName"];
                 item.appendChild(title);
+                var titleInput = document.createElement("input");
+                titleInput.id = "titleInput";
+                titleInput.type = "text";
+                titleInput.placeholder = "Enter new title";
+                item.appendChild(titleInput);
                 var summary = document.createElement("p");
                 summary.innerHTML = currentSerie["seriesSummary"];
                 summary.id = "serieSummary";
                 item.appendChild(summary);
+                var summaryInput = document.createElement("input");
+                summaryInput.type = "text";
+                summaryInput.id = "summaryInput";
+                summaryInput.placeholder = "Enter new summary";
+                item.appendChild(summaryInput);
                 var list = document.createElement("ul");
                 list.className = "ul";
                 list.id = "allChapters";
                 list.innerHTML = "All chapters:"
                 var chapters = currentSerie["allChapters"];
-
                 for (var chapterName in chapters) {
                     var entry = document.createElement("li");
                     entry.innerHTML = "Chapter " + chapters[chapterName]["chapterID"] + ": " + chapterName;
@@ -130,11 +146,15 @@ function loadSerie(){
                     }
                     list.appendChild(entry);
                 }
-
                 item.appendChild(list);
-
-                var src = document.getElementById("columnBackground");
-                src.appendChild(item);
+                var chapterAdd = document.createElement("button");
+                chapterAdd.id = "createChapter";
+                chapterAdd.innerHTML = "New chapter";
+                chapterAdd.onclick = function (){
+                    newChapter();
+                }
+                item.appendChild(chapterAdd);
+                div.appendChild(item);
             }
         }
         if (this.status === 404) {
@@ -196,4 +216,88 @@ function sortChapter(array) {
         newJSON[newArray[i+1]] = newArray[i];
     }
     return newJSON;
+}
+
+function postCover() {
+    var cover = document.getElementById("cover-input").files[0];
+    var formData = new FormData();
+    var xmlhttp = new XMLHttpRequest();
+    var url = "restservices/manage/" + urlVariables[1];
+
+    formData.append("cover", cover);
+    xmlhttp.open("POST", url, true);
+    xmlhttp.setRequestHeader("enctype", "multipart/form-data")
+    xmlhttp.send(formData);
+}
+
+function newChapter() {
+    var backButton = document.getElementById("backbutton");
+    backButton.onclick = function () {
+        location.href = "manage.html#" + urlVariables[0] + "&" + urlVariables[1];
+        location.reload();
+    }
+    var div = document.getElementById("serieInfo");
+    while (div.firstChild){
+        div.removeChild(div.firstChild);
+    }
+    var titleLable = document.createElement("label");
+    titleLable.for = "title";
+    titleLable.innerHTML = "Title:";
+    div.appendChild(titleLable);
+    var titleInput = document.createElement("input");
+    titleInput.type = "text";
+    titleInput.placeholder = "Enter title";
+    titleInput.id = "title";
+    titleInput.name = "title";
+    div.appendChild(titleInput);
+    var chapterNumber = document.createElement("label");
+    chapterNumber.for = "chapterNumber";
+    chapterNumber.innerHTML = "Chapternumber:";
+    div.appendChild(chapterNumber);
+    var numberInput = document.createElement("input");
+    numberInput.id = "chapterNumber";
+    numberInput.type = "number";
+    numberInput.placeholder = "Enter chapternumber";
+    numberInput.step = "0.1";
+    div.appendChild(numberInput);
+    var zipLabel = document.createElement("label");
+    zipLabel.for = "chapterInput";
+    zipLabel.innerHTML = "Chapter:";
+    div.appendChild(zipLabel);
+    var zipInput = document.createElement("input");
+    zipInput.type = "file";
+    zipInput.accept = ".zip, .rar, .7zip";
+    zipInput.id = "chapterInput";
+    div.appendChild(zipInput);
+    var addChapterButton = document.createElement("button");
+    addChapterButton.id = "addChapterButton";
+    addChapterButton.innerHTML = "Create chapter";
+    addChapterButton.onclick = function () {
+        createChapter();
+    }
+    div.appendChild(addChapterButton);
+    return;
+}
+
+function createChapter() {
+    // var formData = new FormData(document.getElementById("serieInfo"));
+    // console.log(formData);
+    var textPost = false;
+    var filePost = false;
+    var title = document.getElementById("title").value;
+    var number = document.getElementById("chapterNumber").value;
+    var jsonData = JSON.stringify({"title": title, "number":number, "serieID":urlVariables[1]})
+    console.log(jsonData);
+    var zip = document.getElementById("chapterInput");
+    var xmlhttpText = new XMLHttpRequest();
+    var xmlhttpFile = new XMLHttpRequest();
+    var url = "restservices/chapter/addChapter/text/" + urlVariables[1];
+    var message = "restservices/chapter/addChapter/file/" + urlVariables[1];
+
+    xmlhttpText.open("POST", url, true);
+    xmlhttpText.setRequestHeader("Content-Type", "appliation/json;charset=UTF-8");
+    xmlhttpText.send(jsonData);
+
+    // xmlhttpFile.open("POST", message, true);
+    // xmlhttpFile.setRequestHeader()
 }
