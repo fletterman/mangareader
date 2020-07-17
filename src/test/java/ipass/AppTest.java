@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 
 import java.util.ArrayList;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class AppTest
@@ -61,7 +62,8 @@ public class AppTest
     @Test
     public void testSeries(){
         ArrayList allSeries = Serie.giveAllSeries();
-        assertTrue(allSeries.size() == 3);
+        boolean testSeries = allSeries.size() == 3;
+        assertEquals(true, testSeries);
     }
 
 

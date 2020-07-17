@@ -1,5 +1,6 @@
 package ipass.mangareader.domeinlaag;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.TreeMap;
@@ -9,7 +10,7 @@ public class Serie {
     private String summary;
     private int seriesID;
     private boolean favorite = false;
-    private static HashSet<Serie> allSeries = new HashSet<Serie>();
+    private static HashSet<Serie> allSeries = new HashSet<>();
     private TreeMap<String, Chapter> allChapters = new TreeMap<>();
 
     public Serie(String name, String summary, int seriesID){
@@ -67,12 +68,15 @@ public class Serie {
     }
 
     public Serie createSeries(String name, String summary, int seriesID){
-        Serie newSerie = new Serie(name, summary, seriesID);
-        return newSerie;
+        return new Serie(name, summary, seriesID);
     }
 
     public void addChapter(Chapter chapter){
         allChapters.put(chapter.giveName(), chapter);
+    }
+
+    public boolean setCover(File cover){
+        return false;
     }
 
     @Override

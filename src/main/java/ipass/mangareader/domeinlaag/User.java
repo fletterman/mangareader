@@ -2,19 +2,14 @@ package ipass.mangareader.domeinlaag;
 
 import java.util.HashSet;
 
-public class User {
-    private String name;
+public class User extends Guest{
     private String password;
-    private static HashSet<User> allUsers = new HashSet<User>();
+    private static HashSet<User> allUsers = new HashSet<>();
 
     public User(String name, String password){
-        this.name = name;
+        super(name);
         this.password = password;
         allUsers.add(this);
-    }
-
-    public String giveName(){
-        return name;
     }
 
     public String givePassword(){
@@ -22,12 +17,11 @@ public class User {
     }
 
     public User createUser(String name, String password){
-        User user = new User(name, password);
-        return user;
+        return new User(name, password);
     }
 
     @Override
     public String toString(){
-        return "User [name=" + name + ", password=" + password + "]";
+        return "User [name=" + super.getName() + ", password=" + password + "]";
     }
 }
