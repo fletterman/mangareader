@@ -1,10 +1,11 @@
 package ipass.mangareader.domeinlaag;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class Page {
+public class Page implements Serializable {
     private int pageID;
     private String pageNumber;
     private int chapterID;

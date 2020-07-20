@@ -39,7 +39,6 @@ function serie() {
                 var entry = document.createElement("li");
                 entry.innerHTML = "Chapter " + chapters[chapterName]["chapterID"] + ": " + chapterName;
                 entry.id = chapters[chapterName]["chapterID"];
-                entry.className = "listItem";
                 entry.onclick = function (){
                     location.href = "reader.html#" + currentSerie["seriesID"] + "/" + this.id;
                 }

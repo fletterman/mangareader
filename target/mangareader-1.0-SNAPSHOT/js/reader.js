@@ -6,7 +6,7 @@ function reader() {
     var url = "restservices/reader/" + chapterInfo;
 
     xmlhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
+        if (this.readyState == 4 && this.status == 200) {//.then
             var myArr = JSON.parse(this.responseText);
             // console.log(myArr);
             if (myArr.length === 0) {

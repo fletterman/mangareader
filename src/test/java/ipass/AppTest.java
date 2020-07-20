@@ -1,14 +1,16 @@
 package ipass;
 
+import ipass.mangareader.domeinlaag.Admin;
 import ipass.mangareader.domeinlaag.Chapter;
 import ipass.mangareader.domeinlaag.Page;
 import ipass.mangareader.domeinlaag.Serie;
+import ipass.mangareader.persistentie.PersistentieManager;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class AppTest
@@ -47,6 +49,15 @@ public class AppTest
             for (int i = 0; i < 26; i++) {
                 new Page(i+53, String.valueOf(i+1), 2, 2);
             }
+            Admin admin = new Admin("stijn", "test");
+
+            try {
+                PersistentieManager.loadSerieFromAzure();
+                System.out.println("Serie loaded");
+            } catch (Exception e){
+                System.out.println("Cannot load serie");
+                e.printStackTrace();
+            }
         }catch(Exception e){
                 String errorMessage = "Exception: " + e.getMessage();
                 System.out.println(errorMessage);
@@ -54,18 +65,44 @@ public class AppTest
     }
 
     @Test
-    public void shouldAnswerWithTrue()
-    {
-        assertTrue( true );
+    public void userIsAdmin(){
+        List<Admin> allAdmins = Admin.getAllAdmins();
+        for (Admin admin : allAdmins){
+            String role = admin.getRole();
+            assertTrue(role.equals("admin"));
+        }
+
     }
 
     @Test
-    public void testSeries(){
-        ArrayList allSeries = Serie.giveAllSeries();
-        boolean testSeries = allSeries.size() == 3;
-        assertEquals(true, testSeries);
+    public void userHasPassword(){
+        List<Admin> allAdmins = Admin.getAllAdmins();
+        for (Admin admin : allAdmins){
+            String password = admin.getPlainPassword();
+            assertTrue(password.equals("test"));
+        }
     }
 
+    @Test
+    public void usernameLongerThan4(){
+        List<Admin> allAdmins = Admin.getAllAdmins();
+        for (Admin admin : allAdmins){
+            int length = admin.getName().length();
+            assertTrue(length> 4);
+        }
+    }
 
+    @Test
+    public void passwordLongerThan4(){
+        List<Admin> allAdmins = Admin.getAllAdmins();
+        for (Admin admin : allAdmins){
+            int length = admin.getPlainPassword().length();
+            assertTrue(length> 4);
+        }
+    }
 
+    @Test
+    public void loginTest(){
+        assertTrue(Admin.validateLogin("Stijn", "test").equals("admin"));
+    }
 }

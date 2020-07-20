@@ -1,23 +1,31 @@
 package ipass.mangareader.domeinlaag;
 
-import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.TreeMap;
 
-public class Serie {
+public class Serie implements Serializable {
     private String name;
     private String summary;
     private int seriesID;
     private boolean favorite = false;
-    private static HashSet<Serie> allSeries = new HashSet<>();
+    private static HashSet<Serie> allSeries = new HashSet<Serie>();
     private TreeMap<String, Chapter> allChapters = new TreeMap<>();
+
+    private static Serie mySerie = new Serie();
 
     public Serie(String name, String summary, int seriesID){
         this.name = name;
         this.summary = summary;
         this.seriesID = seriesID;
         allSeries.add(this);
+    }
+
+    private Serie(){};
+
+    public static void setSerie(Serie serie) {
+        mySerie = serie;
     }
 
     public static ArrayList<Serie> giveAllSeries(){
@@ -68,15 +76,12 @@ public class Serie {
     }
 
     public Serie createSeries(String name, String summary, int seriesID){
-        return new Serie(name, summary, seriesID);
+        Serie newSerie = new Serie(name, summary, seriesID);
+        return newSerie;
     }
 
     public void addChapter(Chapter chapter){
         allChapters.put(chapter.giveName(), chapter);
-    }
-
-    public boolean setCover(File cover){
-        return false;
     }
 
     @Override

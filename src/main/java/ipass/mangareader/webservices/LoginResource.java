@@ -8,7 +8,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.List;
 
 @Path("/login")
 public class LoginResource {
@@ -17,10 +19,14 @@ public class LoginResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response login(@PathParam("username") String username, @PathParam("password") String password){
         ArrayList response = new ArrayList();
-        ArrayList<Admin> allAdmins = Admin.getAllAdmins();
+        List<Admin> allAdmins = Admin.getAllAdmins();
         for (Admin admin : allAdmins) {
-            if (admin.giveName().equals(username) && admin.givePassword().equals(password)){
+            if (admin.getName().equals(username) && admin.getPlainPassword().equals(password)){
                 response.add(admin);
+                AuthenticationResource tokenCreator = null;
+                String token = tokenCreator.createToken(username, "admin");
+                AbstractMap.SimpleEntry<String, String> JWT = new AbstractMap.SimpleEntry<>("JWT", token);
+                response.add(JWT);
             }
         }
         return Response.ok(response).build();

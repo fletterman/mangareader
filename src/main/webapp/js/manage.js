@@ -6,7 +6,7 @@ console.log(urlVariables);
 
 function loadAllSeries() {
     xmlhttp.onreadystatechange = function () {
-        if (this.readyState === 4 && this.status === 200) {
+        if (this.readyState == 4 && this.status == 200) {
             var myArr = JSON.parse(this.responseText);
             myArr = sortBySeriesID(myArr, "seriesID");
             if (myArr.length === 0) {
@@ -63,17 +63,7 @@ function loadSerie(){
         if (this.readyState == 4 && this.status == 200) {
             var currentSerie = JSON.parse(this.responseText);
             if (currentSerie.length == 0) {
-                var src = document.getElementById("columnBackground");
-                var header2 = document.createElement("h2");
-                header2.id = "errorHeader";
-                header2.className = "errorHeader";
-                header2.innerHTML = "ERROR 404";
-                src.appendChild(header2);
-                var errorMessage = document.createElement("p");
-                errorMessage.id = "error";
-                errorMessage.className = "error";
-                errorMessage.innerHTML = "There are no series found, please reach out to Fletterman to get a fix asap";
-                src.appendChild(errorMessage);
+
             } else {
                 sessionStorage.setItem("serie", currentSerie)
                 currentSerie["allChapters"] = sortChapter(currentSerie["allChapters"], "chapterID");
@@ -152,8 +142,7 @@ function loadSerie(){
                     entry.innerHTML = "Chapter " + chapters[chapterName]["chapterID"] + ": " + chapterName;
                     entry.id = chapters[chapterName]["chapterID"];
                     entry.onclick = function () {
-                        location.href = location.href + "/" + this.id;
-                        location.reload();
+                        location.href = "reader.html#" + currentSerie["seriesID"] + "/" + this.id;
                     }
                     list.appendChild(entry);
                 }
@@ -184,44 +173,28 @@ function loadSerie(){
     xmlhttp.send();
 }
 
-function loadSerieChapter(){
-    var xmlhttp = new XMLHttpRequest();
-    var message = "restservices/series/" + urlVariables[1];
-
-    xmlhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            var currentSerie = JSON.parse(this.responseText);
-            if (currentSerie.length == 0) {
-                var src = document.getElementById("columnBackground");
-                var header2 = document.createElement("h2");
-                header2.id = "errorHeader";
-                header2.className = "errorHeader";
-                header2.innerHTML = "ERROR 404";
-                src.appendChild(header2);
-                var errorMessage = document.createElement("p");
-                errorMessage.id = "error";
-                errorMessage.className = "error";
-                errorMessage.innerHTML = "There are no series found, please reach out to Fletterman to get a fix asap";
-                src.appendChild(errorMessage);
-            } else {
-
-            }
-        }
-    }
-}
-
 
 
 window.onload = function () {
     document.getElementById("username").innerHTML = urlVariables[0];
-    if (urlVariables.length == 1) {
+    if (urlVariables.length == 1){
         loadAllSeries();
-    } else if (urlVariables.length = 2) {
+    } else if (urlVariables.length > 1){
         loadSerie();
-    } else if (urlVariables.length == 3) {
-        loadSerieChapter();
     }
 }
+
+// window.onhashchange = function () {
+//     var div = document.getElementById("columnBackground");
+//     while (div.firstChild){
+//         div.removeChild(div.firstChild);
+//     }
+//     if (urlVariables[1]){
+//         loadSerie();
+//     }else{
+//         loadAllSeries()
+//     }
+// }
 
 function sortBySeriesID(array, key) {
     return array.sort(function (a,b) {
@@ -252,7 +225,7 @@ function postCover() {
     var url = "restservices/manage/" + urlVariables[1];
 
     formData.append("cover", cover);
-    xmlhttp.open("PUT", url, true);
+    xmlhttp.open("POST", url, true);
     xmlhttp.setRequestHeader("enctype", "multipart/form-data")
     xmlhttp.send(formData);
 }
@@ -313,7 +286,7 @@ function createChapter() {
     var filePost = false;
     var title = document.getElementById("title").value;
     var number = document.getElementById("chapterNumber").value;
-    var jsonData = {"title": title, "number":number, "serieID":urlVariables[1]};
+    var jsonData = JSON.stringify({"title": title, "number":number, "serieID":urlVariables[1]})
     console.log(jsonData);
     var zip = document.getElementById("chapterInput");
     var xmlhttpText = new XMLHttpRequest();
@@ -325,39 +298,6 @@ function createChapter() {
     xmlhttpText.setRequestHeader("Content-Type", "appliation/json;charset=UTF-8");
     xmlhttpText.send(jsonData);
 
-    xmlhttpFile.open("POST", message, true);
-    xmlhttpFile.setRequestHeader("Content-type", "application/zip");
-    xmlhttpFile.send(zip);
-
-    xmlhttpText.onreadystatechange = function () {
-        if(this.readyState == 4 && this.status == 200){
-            var response = JSON.parse(this.response);
-            if (response["message"] == "succes") {
-                textPost = true;
-            }
-        }
-        if (this.readyState == 4 && this.status == 204){
-            window.alert("Couldn't post the textvalues of the upload. Please try again or contact Fletterman");
-            location.href = "manage.html#" + urlVariables[0] + "&" + urlVariables[1];
-        }
-    }
-
-    xmlhttpFile.onreadystatechange = function () {
-        if(this.readyState == 4 && this.status == 200){
-            var response = JSON.parse(this.response);
-            if (response["message"] == "succes") {
-                filePost = true;
-            }
-        }
-        if(this.readyState == 4 && this.status == 204){
-            window.alert("Couldn't post the zip of the upload. Please try again or contact Fletterman");
-            location.href = "manage.html#" + urlVariables[0] + "&" + urlVariables[1];
-        }
-    }
-
-    //if both posts are succesfull alert the uploader it's done and redirect to manage page of the corresponding series
-    if(textPost && filePost) {
-        window.alert("Succesfully uploaded the chapter");
-        location.href = "manage.html#" + urlVariables[0] + "&" + urlVariables[1];
-    }
+    // xmlhttpFile.open("POST", message, true);
+    // xmlhttpFile.setRequestHeader()
 }

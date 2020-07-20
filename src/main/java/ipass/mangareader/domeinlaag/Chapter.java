@@ -1,8 +1,9 @@
 package ipass.mangareader.domeinlaag;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Chapter {
+public class Chapter implements Serializable {
     private String name;
     private int number;
     private int seriesID;

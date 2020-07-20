@@ -1,36 +1,53 @@
 package ipass.mangareader.domeinlaag;
 
+import java.security.Principal;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.List;
 
-public class Admin extends Guest{
-    private String password;
-    private static ArrayList<Admin> allAdmins = new ArrayList<>();
+public class Admin implements Principal{
+    private static List<Admin> allAdmins = new ArrayList<>();
+    private String username, plainPassword, role;
 
-    public Admin(String name, String password){
-        super(name);
-        this.password = password;
-        allAdmins.add(this);
-    }
-
-    public String giveName(){
-        return super.getName();
-    }
-
-    public String givePassword(){
-        return password;
-    }
-
-    public static ArrayList<Admin> getAllAdmins() {
+    public static List<Admin> getAllAdmins() {
         return allAdmins;
     }
 
-    public Admin createAdmin(String name, String password){
-        return new Admin(name, password);
+    public Admin(String username, String plainPassword){
+        this.username = username;
+        this.plainPassword = plainPassword;
+        this.role = "admin";
+        if(!allAdmins.contains(this)){
+            allAdmins.add(this);
+        }
     }
 
     @Override
-    public String toString(){
-        return "Admin [name=" + super.getName() + ", password=" + password + "]";
+    public String getName() {
+        return username;
+    }
+
+    public String getPlainPassword() {
+        return plainPassword;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public static Admin getUser(String username){
+        for (Admin admin : allAdmins){
+            if (admin.getName().equals(username)){
+                return admin;
+            }
+        }
+        return null;
+    }
+
+    public static String validateLogin(String username, String password){
+        Admin found = getUser(username);
+        if(found != null){
+            return password.equals(found.plainPassword) ? found.getRole(): null;
+        }
+        return null;
     }
 }
