@@ -54,23 +54,23 @@ public class myservletContextListener implements ServletContextListener {
 
         new Admin("stijn", "test");
 
-        try {
-            PersistentieManager.loadSerieFromAzure();
-            System.out.println("Serie loaded");
-        } catch (Exception e){
-            System.out.println("Cannot load serie");
-            e.printStackTrace();
-        }
+//        try {
+//            PersistentieManager.loadSerieFromAzure();
+//            System.out.println("Serie loaded");
+//        } catch (Exception e){
+//            System.out.println("Cannot load serie");
+//            e.printStackTrace();
+//        }
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent sce){
-        try {
-            PersistentieManager.saveSerieToAzure();
-            System.out.println("Serie saved");
-        } catch (Exception e){
-            System.out.println("Cannot save serie");
-            e.printStackTrace();
-        }
+//        try {
+//            PersistentieManager.saveSerieToAzure();
+//            System.out.println("Serie saved");
+//        } catch (Exception e){
+//            System.out.println("Cannot save serie");
+//            e.printStackTrace();
+//        }
     }
 }

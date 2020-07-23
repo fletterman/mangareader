@@ -5,13 +5,13 @@ import ipass.mangareader.domeinlaag.Chapter;
 import ipass.mangareader.domeinlaag.Page;
 import ipass.mangareader.domeinlaag.Serie;
 import ipass.mangareader.persistentie.PersistentieManager;
-import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 public class AppTest
 {
