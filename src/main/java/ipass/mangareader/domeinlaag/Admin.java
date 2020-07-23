@@ -43,6 +43,16 @@ public class Admin implements Principal{
         return null;
     }
 
+    public Admin createAdmin(String username, String password){
+        for (Admin admin : allAdmins){
+            if (admin.getName().equals(username)){
+                return null;
+            }
+        }
+        Admin admin = new Admin(username, password);
+        return admin;
+    }
+
     public static String validateLogin(String username, String password){
         Admin found = getUser(username);
         if(found != null){

@@ -8,6 +8,7 @@ public class Chapter implements Serializable {
     private int number;
     private int seriesID;
     private int chapterID;
+    private boolean hasPrevious;
     private ArrayList<String> pages = new ArrayList<String>();
     private Serie serie;
 
@@ -16,6 +17,12 @@ public class Chapter implements Serializable {
         this.number = number;
         this.chapterID = chapterID;
         this.seriesID = seriesID;
+        if (number != 1){
+            this.hasPrevious = true;
+        } else {
+            this.hasPrevious = false;
+        }
+
         ArrayList<Serie> allSeries = serie.giveAllSeries();
         for (Serie entry : allSeries) {
             int seriesKey = entry.getSeriesID();

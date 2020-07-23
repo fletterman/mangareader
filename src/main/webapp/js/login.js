@@ -5,6 +5,7 @@ document.getElementById("loginbutton").onclick = function login() {
     var formData = new FormData();
     formData.append('username', username);
     formData.append('password', password);
+    console.log(username + " " + password);
     var run = true;
     if (!username){
         alert("Please fill in an username");
@@ -14,7 +15,7 @@ document.getElementById("loginbutton").onclick = function login() {
         alert("Please fill in a password");
         return;
     }
-    var message = "restservices/authentication";
+    var message = "restservices/login";
 
     xmlhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200){
@@ -33,5 +34,6 @@ document.getElementById("loginbutton").onclick = function login() {
     }
 
     xmlhttp.open("POST", message, true);
-    xmlhttp.send(formData);
+    xmlhttp.setRequestHeader('Content-Type', "application/x-www-form-urlencoded");
+    xmlhttp.send(new URLSearchParams(formData));
 }

@@ -2,6 +2,7 @@ package ipass.mangareader.webservices;
 
 import ipass.mangareader.domeinlaag.*;
 
+import javax.annotation.security.PermitAll;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -13,6 +14,7 @@ import java.util.TreeMap;
 public class ReaderResources {
 
     @GET
+    @PermitAll
     @Path("/{seriesID}/{chapterNumber}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getChapter(@PathParam("seriesID") int seriesID, @PathParam("chapterNumber") int chapterNumber){

@@ -222,7 +222,7 @@ function postCover() {
     var cover = document.getElementById("cover-input").files[0];
     var formData = new FormData();
     var xmlhttp = new XMLHttpRequest();
-    var url = "restservices/manage/" + urlVariables[1];
+    var url = "restservices/manage/cover/" + urlVariables[1];
 
     formData.append("cover", cover);
     xmlhttp.open("POST", url, true);

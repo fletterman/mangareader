@@ -2,6 +2,7 @@ package ipass.mangareader.webservices;
 
 import ipass.mangareader.domeinlaag.*;
 
+import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 @Path("/series")
 public class SeriesResource {
     @GET
+    @PermitAll
     @Produces(MediaType.APPLICATION_JSON)
     public Response getSeries(){
         ArrayList allSeries = Serie.giveAllSeries();
@@ -18,6 +20,7 @@ public class SeriesResource {
     }
 
     @GET
+    @PermitAll
     @Path("/{seriesID}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getSerie(@PathParam("seriesID") int seriesID){

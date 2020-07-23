@@ -8,7 +8,7 @@ import javax.ws.rs.ApplicationPath;
 @ApplicationPath("restservices")
 public abstract class JerseyConfig extends ResourceConfig {
     public JerseyConfig() {
-        packages("ipass.mangareader.webservices, ipass.mangareader.security");
+        packages("ipass.mangareader.security, ipass.mangareader.webservices");
         register(RolesAllowedDynamicFeature.class);
     }
 }

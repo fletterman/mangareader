@@ -5,7 +5,6 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import ipass.mangareader.domeinlaag.Admin;
-import ipass.mangareader.webservices.AuthenticationResource;
 
 import javax.annotation.Priority;
 import javax.ws.rs.Priorities;
@@ -19,7 +18,7 @@ import java.io.IOException;
 @Priority(Priorities.AUTHENTICATION)
 public class AuthenticationFilter implements ContainerRequestFilter {
     @Override
-    public void filter(ContainerRequestContext requestContext) throws IOException {
+    public void filter(ContainerRequestContext requestContext) {
         boolean isSecure = requestContext.getSecurityContext().isSecure();
         String scheme = requestContext.getUriInfo().getRequestUri().getScheme();
         MysecurityContext msc = new MysecurityContext(null, scheme);
@@ -33,7 +32,8 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 
                 String user = claims.getSubject();
                 msc = new MysecurityContext(Admin.getUser(user),scheme);
-            } catch (JwtException | IllegalArgumentException e){
+                System.out.println("Ingelogd");
+            } catch (Exception e){
                 System.out.println("Invalid JWT, processing as guest");
             }
         }

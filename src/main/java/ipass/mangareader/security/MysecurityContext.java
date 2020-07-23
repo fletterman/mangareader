@@ -24,7 +24,7 @@ public class MysecurityContext implements SecurityContext {
 
     @Override
     public Principal getUserPrincipal() {
-        return (Principal) this.user;
+        return this.user;
     }
 
     @Override
