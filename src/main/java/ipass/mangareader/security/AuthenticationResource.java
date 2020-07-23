@@ -15,9 +15,9 @@ import java.util.Calendar;
 
 @Path("/login")
 public class AuthenticationResource {
-    final  static public Key key = MacProvider.generateKey();
+    final static public Key key = MacProvider.generateKey();
 
-    public String createToken(String username, String role) throws JwtException {
+    private String createToken(String username, String role) throws JwtException {
         Calendar expiration = Calendar.getInstance();
         expiration.add(Calendar.MINUTE, 30);
         return Jwts.builder()
@@ -30,10 +30,12 @@ public class AuthenticationResource {
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-//    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public Response authenticateUser(@FormParam("username") String username, @FormParam("password") String password){
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public Response authenticateUser(@FormParam("uname") String username, @FormParam("passwd") String password){
         try {
             String role;
+            System.out.println(username);
+            System.out.println(password);
             if (username.length() >= 1) {
                 role = Admin.validateLogin(username, password);
             } else {

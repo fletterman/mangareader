@@ -3,8 +3,8 @@ document.getElementById("loginbutton").onclick = function login() {
     var username = document.getElementById("username").value;
     var password = document.getElementById("password").value;
     var formData = new FormData();
-    formData.append('username', username);
-    formData.append('password', password);
+    formData.append('uname', username);
+    formData.append('passwd', password);
     console.log(username + " " + password);
     var run = true;
     if (!username){

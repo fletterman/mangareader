@@ -11,8 +11,8 @@ public class ManageResource {
     @Path("/cover/{seriesID}")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response edit(@FormParam("cover") InputStream inputStream, @PathParam("seriesID") String seriesID){
-
+    public Response edit(@FormParam("cover") String inputStream, @PathParam("seriesID") String seriesID){
+        //@TODO fill in this void
 
         return Response.ok().build();
     }
