@@ -28,8 +28,8 @@ public class ManageResource {
         return Response.ok().build();
     }
 
-    @DELETE
-    @Path("/{seriesID}")
+    @POST
+    @Path("/delete/{seriesID}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteSerie(@PathParam("seriesID") int serieID){
         if (Serie.deleteSerie(serieID)){

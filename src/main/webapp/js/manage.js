@@ -447,7 +447,7 @@ function editSeries() {
 
 function deleteSerie(serieID) {
     var xmlhttp = new XMLHttpRequest();
-    var message = "restservices/manage/" + urlVariables[1];
+    var message = "restservices/manage/delete/" + serieID;
 
     xmlhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200){
@@ -456,7 +456,7 @@ function deleteSerie(serieID) {
         }
     }
 
-    xmlhttp.open("DELETE", message, true);
+    xmlhttp.open("POST", message, true);
     xmlhttp.send();
 }
 
