@@ -6,7 +6,7 @@ console.log(urlVariables);
 
 function loadAllSeries() {
     xmlhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
+        if (this.readyState === 4 && this.status === 200) {
             var myArr = JSON.parse(this.responseText);
             myArr = sortBySeriesID(myArr, "seriesID");
             if (myArr.length === 0) {
@@ -63,7 +63,17 @@ function loadSerie(){
         if (this.readyState == 4 && this.status == 200) {
             var currentSerie = JSON.parse(this.responseText);
             if (currentSerie.length == 0) {
-
+                var src = document.getElementById("columnBackground");
+                var header2 = document.createElement("h2");
+                header2.id = "errorHeader";
+                header2.className = "errorHeader";
+                header2.innerHTML = "ERROR 404";
+                src.appendChild(header2);
+                var errorMessage = document.createElement("p");
+                errorMessage.id = "error";
+                errorMessage.className = "error";
+                errorMessage.innerHTML = "There are no series found, please reach out to Fletterman to get a fix asap";
+                src.appendChild(errorMessage);
             } else {
                 sessionStorage.setItem("serie", currentSerie)
                 currentSerie["allChapters"] = sortChapter(currentSerie["allChapters"], "chapterID");
@@ -79,6 +89,14 @@ function loadSerie(){
                     location.reload();
                 }
                 src.appendChild(back);
+                var deleteChapter = document.createElement("button");
+                deleteChapter.className = "delete";
+                deleteChapter.innerHTML = "Delete serie";
+                deleteChapter.onclick = function () {
+                    deleteSerie(currentSerie["seriesID"]);
+                    location.href = "manage.html#" + urlVariables[0];
+                }
+                src.appendChild(deleteChapter);
                 var div = document.createElement("div");
                 src.appendChild(div);
                 var item = document.createElement("form");
@@ -122,6 +140,7 @@ function loadSerie(){
                 titleInput.id = "titleInput";
                 titleInput.type = "text";
                 titleInput.placeholder = "Enter new title";
+                titleInput.value = currentSerie["seriesName"];
                 item.appendChild(titleInput);
                 var summary = document.createElement("p");
                 summary.innerHTML = currentSerie["seriesSummary"];
@@ -131,7 +150,15 @@ function loadSerie(){
                 summaryInput.type = "text";
                 summaryInput.id = "summaryInput";
                 summaryInput.placeholder = "Enter new summary";
+                summaryInput.value = currentSerie["seriesSummary"];
+                summaryInput.size = 50;
                 item.appendChild(summaryInput);
+                var seriesEdit = document.createElement("button");
+                seriesEdit.innerHTML = "Edit serie";
+                seriesEdit.onclick = function () {
+                    editSeries();
+                }
+                item.appendChild(seriesEdit);
                 var list = document.createElement("ul");
                 list.className = "ul";
                 list.id = "allChapters";
@@ -139,10 +166,11 @@ function loadSerie(){
                 var chapters = currentSerie["allChapters"];
                 for (var chapterName in chapters) {
                     var entry = document.createElement("li");
-                    entry.innerHTML = "Chapter " + chapters[chapterName]["chapterID"] + ": " + chapterName;
+                    entry.innerHTML = "Chapter " + (parseInt(chapters[chapterName]["chapterID"]) + 1) + ": " + chapterName;
                     entry.id = chapters[chapterName]["chapterID"];
                     entry.onclick = function () {
-                        location.href = "reader.html#" + currentSerie["seriesID"] + "/" + this.id;
+                        location.href = location.href + "/" + this.id;
+                        location.reload();
                     }
                     list.appendChild(entry);
                 }
@@ -173,28 +201,88 @@ function loadSerie(){
     xmlhttp.send();
 }
 
+function loadSerieChapter(){
+    var xmlhttp = new XMLHttpRequest();
+    var message = "restservices/series/" + urlVariables[1];
+
+    xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            var currentChapter = JSON.parse(this.responseText);
+            if (currentSerie.length == 0) {
+                var src = document.getElementById("columnBackground");
+                var header2 = document.createElement("h2");
+                header2.id = "errorHeader";
+                header2.className = "errorHeader";
+                header2.innerHTML = "ERROR 404";
+                src.appendChild(header2);
+                var errorMessage = document.createElement("p");
+                errorMessage.id = "error";
+                errorMessage.className = "error";
+                errorMessage.innerHTML = "There are no series found, please reach out to Fletterman to get a fix asap";
+                src.appendChild(errorMessage);
+            } else {
+                var src = document.getElementById("columnBackground");
+                var back = document.createElement("button");
+                back.innerHTML = "Back";
+                back.className = "backbutton";
+                back.id = "backbutton";
+                back.onclick = function () {
+                    location.href = "manage.html#" + urlVariables[0] + "&" + urlVariables[1][0];
+                    location.reload();
+                }
+                src.appendChild(back);
+                var deleteChapter = document.createElement("button");
+                deleteChapter.className = "delete";
+                deleteChapter.innerHTML = "Delete chapter";
+                deleteChapter.onclick = function () {
+                    chapterDelete(urlVariables[1][0]);
+                    location.href = "manage.html#" + urlVariables[0];
+                }
+                src.appendChild(deleteChapter);
+                var div = document.createElement("div");
+                src.appendChild(div);
+                var item = document.createElement("form");
+                item.id = "chapterInfo";
+                item.className = "form";
+                item.enctype = "multipart/form-data";
+                var title = document.createElement("h1");
+                title.className = "chapterTitle";
+                title.id = "chapterTitle";
+                title.innerHTML = currentChapter[0];
+                item.appendChild(title);
+                var titleInput = document.createElement("input");
+                titleInput.id = "titleInput";
+                titleInput.type = "text";
+                titleInput.placeholder = "Enter new title";
+                titleInput.value = currentChapter[0];
+                item.appendChild(titleInput);
+                var chapterEdit = document.createElement("button");
+                chapterEdit.innerHTML = "Edit serie";
+                chapterEdit.onclick = function () {
+                    editChapter(urlVariables[1]);
+                }
+                item.appendChild(seriesEdit);
+                div.appendChild(item);
+            }
+        }
+    }
+
+    xmlhttp.open("GET", message, true);
+    xmlhttp.send()
+}
+
 
 
 window.onload = function () {
     document.getElementById("username").innerHTML = urlVariables[0];
-    if (urlVariables.length == 1){
+    if (urlVariables.length === 1) {
         loadAllSeries();
-    } else if (urlVariables.length > 1){
+    } else if (urlVariables.length === 2 && urlVariables[1].length === 1) {
         loadSerie();
+    } else if (urlVariables.length === 2 && urlVariables[1].length === 3) {
+        loadSerieChapter();
     }
 }
-
-// window.onhashchange = function () {
-//     var div = document.getElementById("columnBackground");
-//     while (div.firstChild){
-//         div.removeChild(div.firstChild);
-//     }
-//     if (urlVariables[1]){
-//         loadSerie();
-//     }else{
-//         loadAllSeries()
-//     }
-// }
 
 function sortBySeriesID(array, key) {
     return array.sort(function (a,b) {
@@ -222,10 +310,10 @@ function postCover() {
     var cover = document.getElementById("cover-input").files[0];
     var formData = new FormData();
     var xmlhttp = new XMLHttpRequest();
-    var url = "restservices/manage/cover/" + urlVariables[1];
+    var url = "restservices/manage/" + urlVariables[1];
 
     formData.append("cover", cover);
-    xmlhttp.open("POST", url, true);
+    xmlhttp.open("PUT", url, true);
     xmlhttp.setRequestHeader("enctype", "multipart/form-data")
     xmlhttp.send(formData);
 }
@@ -286,7 +374,7 @@ function createChapter() {
     var filePost = false;
     var title = document.getElementById("title").value;
     var number = document.getElementById("chapterNumber").value;
-    var jsonData = JSON.stringify({"title": title, "number":number, "serieID":urlVariables[1]})
+    var jsonData = {"title": title, "number":number, "serieID":urlVariables[1]};
     console.log(jsonData);
     var zip = document.getElementById("chapterInput");
     var xmlhttpText = new XMLHttpRequest();
@@ -298,6 +386,80 @@ function createChapter() {
     xmlhttpText.setRequestHeader("Content-Type", "appliation/json;charset=UTF-8");
     xmlhttpText.send(jsonData);
 
-    // xmlhttpFile.open("POST", message, true);
-    // xmlhttpFile.setRequestHeader()
+    xmlhttpFile.open("POST", message, true);
+    xmlhttpFile.setRequestHeader("Content-type", "application/zip");
+    xmlhttpFile.send(zip);
+
+    xmlhttpText.onreadystatechange = function () {
+        if(this.readyState == 4 && this.status == 200){
+            var response = JSON.parse(this.response);
+            if (response["message"] == "succes") {
+                textPost = true;
+            }
+        }
+        if (this.readyState == 4 && this.status == 204){
+            window.alert("Couldn't post the textvalues of the upload. Please try again or contact Fletterman");
+            location.href = "manage.html#" + urlVariables[0] + "&" + urlVariables[1];
+        }
+    }
+
+    xmlhttpFile.onreadystatechange = function () {
+        if(this.readyState == 4 && this.status == 200){
+            var response = JSON.parse(this.response);
+            if (response["message"] == "succes") {
+                filePost = true;
+            }
+        }
+        if(this.readyState == 4 && this.status == 204){
+            window.alert("Couldn't post the zip of the upload. Please try again or contact Fletterman");
+            location.href = "manage.html#" + urlVariables[0] + "&" + urlVariables[1];
+        }
+    }
+
+    //if both posts are successful alert the uploader it's done and redirect to manage page of the corresponding series
+    if(textPost && filePost) {
+        window.alert("Succesfully uploaded the chapter");
+        location.href = "manage.html#" + urlVariables[0] + "&" + urlVariables[1];
+    }
+}
+
+function editSeries() {
+    var formData = new FormData();
+    formData.append("title", document.getElementById("titleInput").value);
+    formData.append("summary", document.getElementById("serieSummary").value);
+
+
+    var xmlhttp = new XMLHttpRequest();
+    var message = "restservices/manage/" + urlVariables[1];
+
+    xmlhttp.onreadystatechange = function () {
+        if(this.readyState == 4 && this.status == 200){
+            alert("Succesfully updated the serie's details");
+            location.href = "manage.html#" + urlVariables[0];
+            window.reload();
+        }
+    }
+
+    xmlhttp.open("POST", message, true);
+    xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
+    xmlhttp.send(new URLSearchParams(formData));
+}
+
+function deleteSerie(serieID) {
+    var xmlhttp = new XMLHttpRequest();
+    var message = "restservices/manage/" + urlVariables[1];
+
+    xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200){
+            alert("Successfully deleted serie");
+            location.href = "manage.html#" + urlVariables[0];
+        }
+    }
+
+    xmlhttp.open("DELETE", message, true);
+    xmlhttp.send();
+}
+
+function chapterDelete(info) {
+
 }

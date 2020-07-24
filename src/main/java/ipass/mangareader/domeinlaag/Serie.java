@@ -1,31 +1,27 @@
 package ipass.mangareader.domeinlaag;
 
-import java.io.Serializable;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.TreeMap;
 
-public class Serie implements Serializable {
+public class Serie {
     private String name;
     private String summary;
     private int seriesID;
     private boolean favorite = false;
-    private static HashSet<Serie> allSeries = new HashSet<Serie>();
-    private TreeMap<String, Chapter> allChapters = new TreeMap<>();
-
-    private static Serie mySerie = new Serie();
+    private static ArrayList<Serie> allSeries = new ArrayList<>();
+    private static TreeMap<String, Chapter> allChapters = new TreeMap<>();
 
     public Serie(String name, String summary, int seriesID){
         this.name = name;
         this.summary = summary;
         this.seriesID = seriesID;
-        allSeries.add(this);
-    }
-
-    private Serie(){};
-
-    public static void setSerie(Serie serie) {
-        mySerie = serie;
+        if (allSeries.contains(this)){
+        } else {
+            allSeries.add(this);
+        }
     }
 
     public static ArrayList<Serie> giveAllSeries(){
@@ -43,12 +39,28 @@ public class Serie implements Serializable {
                 requestedSerie = serie;
             }
         }
-//        System.out.println(requestedSerie);
         return requestedSerie;
     }
 
-    public TreeMap<String, Chapter> getAllChapters() {
+    public static TreeMap<String, Chapter> getAllChapters() {
         return allChapters;
+    }
+
+    public static Chapter getChapter(int chapterID, int seriesID){
+        Chapter chapter = null;
+        ArrayList<Serie> allSeries = Serie.giveAllSeries();
+        for (Serie entry : allSeries) {
+            int seriesKey = entry.getSeriesID();
+            if (seriesKey == seriesID) {
+                TreeMap<String, Chapter> allChapters = entry.getAllChapters();
+                for (Map.Entry<String, Chapter> eachChapter : allChapters.entrySet()) {
+                    if (eachChapter.getValue().getChapterID() == chapterID) {
+                        chapter = eachChapter.getValue();
+                    }
+                }
+            }
+        }
+        return chapter;
     }
 
     public String getSeriesName(){
@@ -76,12 +88,34 @@ public class Serie implements Serializable {
     }
 
     public Serie createSeries(String name, String summary, int seriesID){
-        Serie newSerie = new Serie(name, summary, seriesID);
-        return newSerie;
+        return new Serie(name, summary, seriesID);
     }
 
     public void addChapter(Chapter chapter){
         allChapters.put(chapter.giveName(), chapter);
+    }
+
+    public boolean setCover(File cover){
+        return false;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
+
+    public static boolean deleteSerie(int seriesID){
+        if (seriesID >= 0){
+            return allSeries.remove(allSeries.indexOf(Serie.getSeries(seriesID))) != null;
+        }
+        return false;
+    }
+
+    public static void setAllSeries(ArrayList<Serie> allSeries) {
+        Serie.allSeries = allSeries;
     }
 
     @Override

@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="mangareader" />
+        <module name="mangareader-ffdb0f6354a0c0cc643065f55c0660ac83a97cd6" />
       </profile>
     </annotationProcessing>
   </component>

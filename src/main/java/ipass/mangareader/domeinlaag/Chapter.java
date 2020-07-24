@@ -1,29 +1,37 @@
 package ipass.mangareader.domeinlaag;
 
-import java.io.Serializable;
+import javax.ws.rs.PathParam;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
-public class Chapter implements Serializable {
+public class Chapter {
     private String name;
     private int number;
     private int seriesID;
-    private int chapterID;
-    private boolean hasPrevious;
-    private ArrayList<String> pages = new ArrayList<String>();
+    private final int chapterID;
+    private final boolean hasPrevious;
+    private boolean hasNext;
+    private final ArrayList<String> pages = new ArrayList<String>();
     private Serie serie;
 
-    public Chapter(String name, int number, int chapterID, int seriesID){
+    public Chapter(String name, int number, int chapterID, int seriesID) {
         this.name = name;
         this.number = number;
         this.chapterID = chapterID;
         this.seriesID = seriesID;
-        if (number != 1){
-            this.hasPrevious = true;
-        } else {
-            this.hasPrevious = false;
+        this.hasPrevious = number != 1;
+        this.hasNext = false;
+        if (number != 1) {
+            TreeMap<String, Chapter> allChapters = Serie.getAllChapters();
+            for (Map.Entry<String, Chapter> eachChapter : allChapters.entrySet()) {
+                if (eachChapter.getValue().giveNumber() == number - 1) {
+                    eachChapter.getValue().setHasNext(true);
+                }
+            }
         }
-
-        ArrayList<Serie> allSeries = serie.giveAllSeries();
+        ArrayList<Serie> allSeries = Serie.giveAllSeries();
         for (Serie entry : allSeries) {
             int seriesKey = entry.getSeriesID();
             if (seriesKey == seriesID) {
@@ -31,6 +39,18 @@ public class Chapter implements Serializable {
 //                System.out.println(this);
             }
         }
+    }
+
+    public boolean hasPrevious() {
+        return hasPrevious;
+    }
+
+    public void setHasNext(boolean hasNext) {
+        this.hasNext = hasNext;
+    }
+
+    public boolean hasNext() {
+        return hasNext;
     }
 
     public void setName(String name) {
@@ -67,6 +87,13 @@ public class Chapter implements Serializable {
 
     public ArrayList<String> getPages() {
         return pages;
+    }
+
+    public static boolean deleteChapter(int seriesID, int chapterID){
+        if (seriesID >= 0){
+            return Serie.getAllChapters().remove(Serie.getChapter(chapterID, seriesID).giveName()) != null;
+        }
+        return false;
     }
 
     @Override

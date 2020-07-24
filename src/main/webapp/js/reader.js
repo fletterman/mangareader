@@ -6,9 +6,9 @@ function reader() {
     var url = "restservices/reader/" + chapterInfo;
 
     xmlhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {//.then
+        if (this.readyState == 4 && this.status == 200) {
             var myArr = JSON.parse(this.responseText);
-            // console.log(myArr);
+            console.log(myArr);
             if (myArr.length === 0) {
                 document.getElementById("chapternumber").innerHTML = "This chapter doesn't exist."
                 document.getElementById("chaptername").innerHTML = "Please try with another chapter"
@@ -23,6 +23,7 @@ function reader() {
                 }
                 loadName(myArr[0]);
                 loadNumber(myArr[1]);
+                setPrevNext(myArr[1], myArr[2], myArr[3]);
             }
         }
     };
@@ -52,6 +53,21 @@ function reader() {
 
     function loadNumber(chapterNumber) {
         document.getElementById("chapternumber").innerHTML = "Chapter " + chapterNumber + ":";
+    }
+
+    function setPrevNext(number, prev, next) {
+        if (prev){
+            var previous = document.getElementById("previous");
+            previous.onclick = function () {
+                location.href = "reader.html#" + chapterInfo[0] + "/" + (parseInt(number)-1);
+            }
+        }
+        if (next){
+            var next = document.getElementById("next");
+            next.onclick = function () {
+                location.href = "reader.html#" + chapterInfo[0] + "/" + (parseInt(number)+1);
+            }
+        }
     }
 }
 

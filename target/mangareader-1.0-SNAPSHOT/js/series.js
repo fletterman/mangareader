@@ -66,13 +66,3 @@ function sortBySeriesID(array, key) {
         return ((x < y) ? -1: ((x > y) ? 1 : 0));
     });
 }
-
-window.onload = function () {
-    var JWT = window.sessionStorage.getItem("myJWT");
-    if (JWT){
-        //no action needed
-    } else {
-        window.location.href = "/index.html";
-        window.reload();
-    }
-}

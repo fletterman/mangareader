@@ -1,17 +1,14 @@
 package ipass.mangareader.domeinlaag;
 
-import java.io.Serializable;
-
-public class Guest implements Serializable {
-    private String name = "Guest";
-    private static String role = "guest";
+public class Guest {
+    private String name;
 
     public Guest (String name){
         this.name = name;
     }
 
-    public static String getRole() {
-        return role;
+    public String getName() {
+        return name;
     }
 
     @Override

@@ -1,32 +1,26 @@
 package ipass.mangareader.webservices;
 
 import ipass.mangareader.domeinlaag.*;
-import ipass.mangareader.security.AuthenticationResource;
 
-import javax.ws.rs.*;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.AbstractMap;
 import java.util.ArrayList;
-import java.util.List;
 
 @Path("/login")
 public class LoginResource {
-    @POST
+    @GET
+    @Path("/{username}/{password}")
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public Response login(@FormParam("username") String username, @FormParam("password") String password){
-        List response = new ArrayList();
-        System.out.println(username + " " + password);
-        List<Admin> allAdmins = Admin.getAllAdmins();
+    public Response login(@PathParam("username") String username, @PathParam("password") String password){
+        ArrayList response = new ArrayList();
+        ArrayList<Admin> allAdmins = Admin.getAllAdmins();
         for (Admin admin : allAdmins) {
-            if (admin.getName().equals(username) && admin.getPlainPassword().equals(password)){
+            if (admin.giveName().equals(username) && admin.givePassword().equals(password)){
                 response.add(admin);
-                AuthenticationResource tokenCreator = null;
-                String token = tokenCreator.createToken(username, "admin");
-                AbstractMap.SimpleEntry<String, String> JWT = new AbstractMap.SimpleEntry<>("JWT", token);
-                response.add(JWT);
-                System.out.println(JWT);
             }
         }
         return Response.ok(response).build();

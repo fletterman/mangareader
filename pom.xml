@@ -112,11 +112,6 @@
           <artifactId>netty-codec-http</artifactId>
           <version>4.1.49.Final</version>
       </dependency>
-    <dependency>
-      <groupId>io.jsonwebtoken</groupId>
-      <artifactId>jjwt</artifactId>
-      <version>0.9.1</version>
-    </dependency>
   </dependencies>
 
   <build>

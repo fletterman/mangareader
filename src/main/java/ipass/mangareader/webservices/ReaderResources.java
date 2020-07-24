@@ -2,7 +2,6 @@ package ipass.mangareader.webservices;
 
 import ipass.mangareader.domeinlaag.*;
 
-import javax.annotation.security.PermitAll;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -14,7 +13,6 @@ import java.util.TreeMap;
 public class ReaderResources {
 
     @GET
-    @PermitAll
     @Path("/{seriesID}/{chapterNumber}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getChapter(@PathParam("seriesID") int seriesID, @PathParam("chapterNumber") int chapterNumber){
@@ -29,8 +27,11 @@ public class ReaderResources {
                 TreeMap<String, Chapter> allChapters = entry.getAllChapters();
                 for (Map.Entry<String, Chapter> eachChapter : allChapters.entrySet()){
                     if(eachChapter.getValue().giveNumber() == chapterNumber){
+                        System.out.println(eachChapter.getValue().hasPrevious());
                         allImages.add(eachChapter.getValue().giveName());
                         allImages.add(eachChapter.getValue().giveNumber());
+                        allImages.add(eachChapter.getValue().hasPrevious());
+                        allImages.add(eachChapter.getValue().hasNext());
                         ArrayList<String> allpages = eachChapter.getValue().getPages();
                         for (String allpage : allpages) {
                             allImages.add(allpage);
@@ -39,6 +40,7 @@ public class ReaderResources {
                 }
             }
         }
+        System.out.println(allImages);
         return Response.ok(allImages).build();
     }
 }

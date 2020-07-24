@@ -37,10 +37,11 @@ function serie() {
 
             for (var chapterName in chapters){
                 var entry = document.createElement("li");
-                entry.innerHTML = "Chapter " + chapters[chapterName]["chapterID"] + ": " + chapterName;
+                entry.innerHTML = "Chapter " + (parseInt(chapters[chapterName]["chapterID"]) + 1) + ": " + chapterName;
                 entry.id = chapters[chapterName]["chapterID"];
+                entry.className = "listItem";
                 entry.onclick = function (){
-                    location.href = "reader.html#" + currentSerie["seriesID"] + "/" + this.id;
+                    location.href = "reader.html#" + currentSerie["seriesID"] + "/" + (parseInt(this.id) + 1);
                 }
                 list.appendChild(entry);
                 // console.log(chapters[chapterName])
